@@ -1,0 +1,14 @@
+{
+	"name": "sql_db_0",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "servicios-gratis.database.windows.net",
+			"database": "salary-analysis",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SystemAssignedManagedIdentity"
+		}
+	}
+}
