@@ -1,0 +1,39 @@
+{
+	"name": "Employee_0",
+	"properties": {
+		"description": "First digestion from CSV",
+		"linkedServiceName": {
+			"referenceName": "sql_db_0",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "employee_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "age",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "experience",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "income",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "employee"
+		}
+	}
+}
