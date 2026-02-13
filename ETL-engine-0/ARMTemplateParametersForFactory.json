@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ETL-engine-0"
+		},
+		"Source__dataset_connectionString": {
+			"value": ""
+		},
+		"sql_db_0_password": {
+			"value": ""
+		},
+		"sql_db_0_properties_typeProperties_server": {
+			"value": "db-server-0.database.windows.net"
+		},
+		"sql_db_0_properties_typeProperties_database": {
+			"value": "salaries_scan_0"
+		},
+		"sql_db_0_properties_typeProperties_userName": {
+			"value": "CloudSAc12b48ee"
+		}
+	}
+}
