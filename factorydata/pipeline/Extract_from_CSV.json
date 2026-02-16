@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "PL_extract_csv",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
