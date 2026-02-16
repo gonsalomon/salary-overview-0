@@ -258,6 +258,39 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/salary_upd_daily')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Let's pretend the CSV in Blob Storage actually changes. It's a sample activity to put us into knowing how Data Factory works, so a dynamic CSV isn't needed. Yet, it's a personal desire to actually deploy one from a IoT project I have: checking luminous intensity after a certain threshold to automate things at home. I know many solutions already exist, but for the sake of learning alone, I'll give this a shot!",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "Extract_from_CSV",
+						"type": "PipelineReference"
+					},
+					"parameters": {}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Hour",
+					"interval": 24,
+					"startTime": "2026-02-17T10:00:00Z",
+					"endTime": "2026-05-17T09:40:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Extract_from_CSV')]"
+			]
 		}
 	]
 }
