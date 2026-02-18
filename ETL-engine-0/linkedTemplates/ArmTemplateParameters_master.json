@@ -15,7 +15,7 @@
 			"value": "db-server-0.database.windows.net"
 		},
 		"sql_db_0_properties_typeProperties_database": {
-			"value": "salaries_scan_0"
+			"value": "db_0"
 		},
 		"sql_db_0_properties_typeProperties_userName": {
 			"value": "CloudSAc12b48ee"

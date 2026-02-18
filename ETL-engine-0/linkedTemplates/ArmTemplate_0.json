@@ -21,7 +21,7 @@
 		},
 		"sql_db_0_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "salaries_scan_0"
+			"defaultValue": "db_0"
 		},
 		"sql_db_0_properties_typeProperties_userName": {
 			"type": "string",
@@ -68,68 +68,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sql_db_0",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sql_db_0')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Employee_0')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "First digestion from CSV",
-				"linkedServiceName": {
-					"referenceName": "sql_db_0",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "employee_id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "age",
-						"type": "smallint",
-						"precision": 5
-					},
-					{
-						"name": "experience",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "income",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "employee"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sql_db_0')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/input_0')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -171,110 +109,21 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Extract_from_CSV')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/keep_alive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "PL_extract_csv",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "age",
-											"type": "String"
-										},
-										"sink": {
-											"name": "age",
-											"type": "smallint",
-											"precision": 5
-										}
-									},
-									{
-										"source": {
-											"name": "experience",
-											"type": "String"
-										},
-										"sink": {
-											"name": "experience",
-											"type": "int",
-											"precision": 10
-										}
-									},
-									{
-										"source": {
-											"name": "income",
-											"type": "String"
-										},
-										"sink": {
-											"name": "income",
-											"type": "money",
-											"scale": 4,
-											"precision": 19
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "input_0",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Employee_0",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
+				"linkedServiceName": {
+					"referenceName": "sql_db_0",
+					"type": "LinkedServiceReference"
 				},
-				"annotations": []
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/input_0')]",
-				"[concat(variables('factoryId'), '/datasets/Employee_0')]"
+				"[concat(variables('factoryId'), '/linkedServices/sql_db_0')]"
 			]
 		},
 		{
@@ -282,11 +131,9 @@
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Free tier auto pauses. This should avoid that.",
 				"activities": [
 					{
-						"name": "Lookup0",
-						"description": "Pulse.",
+						"name": "Lookup1",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -305,7 +152,7 @@
 								"partitionOption": "None"
 							},
 							"dataset": {
-								"referenceName": "AzureSqlTable1",
+								"referenceName": "keep_alive",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -318,40 +165,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/salary_upd_daily')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Let's pretend the CSV in Blob Storage actually changes. It's a sample activity to put us into knowing how Data Factory works, so a dynamic CSV isn't needed. Yet, it's a personal desire to actually deploy one from a IoT project I have: checking luminous intensity after a certain threshold to automate things at home. I know many solutions already exist, but for the sake of learning alone, I'll give this a shot!",
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "Extract_from_CSV",
-						"type": "PipelineReference"
-					},
-					"parameters": {}
-				},
-				"type": "TumblingWindowTrigger",
-				"typeProperties": {
-					"frequency": "Hour",
-					"interval": 24,
-					"startTime": "2026-02-17T10:00:00Z",
-					"endTime": "2026-05-17T09:40:00Z",
-					"delay": "00:00:00",
-					"maxConcurrency": 50,
-					"retryPolicy": {
-						"intervalInSeconds": 30
-					},
-					"dependsOn": []
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Extract_from_CSV')]"
+				"[concat(variables('factoryId'), '/datasets/keep_alive')]"
 			]
 		},
 		{
@@ -375,11 +189,11 @@
 					"recurrence": {
 						"frequency": "Day",
 						"interval": 1,
-						"startTime": "2026-02-18T05:20:00",
+						"startTime": "2026-02-18T17:44:00",
 						"timeZone": "E. South America Standard Time",
 						"schedule": {
 							"hours": [
-								6
+								15
 							]
 						}
 					}
