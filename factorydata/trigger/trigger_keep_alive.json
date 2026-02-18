@@ -16,7 +16,7 @@
 			"recurrence": {
 				"frequency": "Day",
 				"interval": 1,
-				"startTime": "2026-02-18T05:15:00",
+				"startTime": "2026-02-18T05:20:00",
 				"timeZone": "E. South America Standard Time",
 				"schedule": {
 					"hours": [
