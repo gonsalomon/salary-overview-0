@@ -1,0 +1,29 @@
+{
+	"name": "trigger_keep_alive",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "keep_db_alive",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2026-02-18T17:44:00",
+				"timeZone": "E. South America Standard Time",
+				"schedule": {
+					"hours": [
+						15
+					]
+				}
+			}
+		}
+	}
+}

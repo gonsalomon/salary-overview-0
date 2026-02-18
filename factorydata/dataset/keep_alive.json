@@ -1,0 +1,12 @@
+{
+	"name": "keep_alive",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_db_0",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
