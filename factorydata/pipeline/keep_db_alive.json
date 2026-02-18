@@ -19,11 +19,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT GETDATE() AS keep_alive",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "Employee_0",
+						"referenceName": "AzureSqlTable1",
 						"type": "DatasetReference"
 					}
 				}
