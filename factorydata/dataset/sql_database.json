@@ -1,0 +1,59 @@
+{
+	"name": "sql_database",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_db_0",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "location",
+				"type": "varchar"
+			},
+			{
+				"name": "forecast_timestamp",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "temperature",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "humidity",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "conditions",
+				"type": "varchar"
+			},
+			{
+				"name": "wind_speed",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "loaded_at",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "weather_forecast"
+		}
+	}
+}
