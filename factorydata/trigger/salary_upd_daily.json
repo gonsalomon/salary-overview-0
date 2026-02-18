@@ -4,12 +4,6 @@
 		"description": "Let's pretend the CSV in Blob Storage actually changes. It's a sample activity to put us into knowing how Data Factory works, so a dynamic CSV isn't needed. Yet, it's a personal desire to actually deploy one from a IoT project I have: checking luminous intensity after a certain threshold to automate things at home. I know many solutions already exist, but for the sake of learning alone, I'll give this a shot!",
 		"annotations": [],
 		"runtimeState": "Started",
-		"pipeline": {
-			"pipelineReference": {
-				"referenceName": "Extract_from_CSV",
-				"type": "PipelineReference"
-			}
-		},
 		"type": "TumblingWindowTrigger",
 		"typeProperties": {
 			"frequency": "Hour",
