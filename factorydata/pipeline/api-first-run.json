@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Web1",
+				"name": "get-weather-data",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -18,6 +18,65 @@
 					"method": "GET",
 					"url": "https://api.openweathermap.org/data/2.5/weather?lat=-37.310663&lon=-59.112763&appid=f63e8d24da2afca5c6c6c1f3b73f077c&units=metric&lang=es"
 				}
+			},
+			{
+				"name": "guardar-en-json",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "get-weather-data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings",
+							"filePattern": "setOfObjects"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"value": "@activity('get-weather-data').output",
+						"type": "Expression"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Json1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Json2",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
