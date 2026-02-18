@@ -26,11 +26,91 @@
 							"type": "JsonReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['weather'][0]['description']"
+								},
+								"sink": {
+									"name": "conditions",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['main']['temp']"
+								},
+								"sink": {
+									"name": "temperature",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['main']['humidity']"
+								},
+								"sink": {
+									"name": "humidity",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['wind']['speed']"
+								},
+								"sink": {
+									"name": "wind_speed",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['dt']"
+								},
+								"sink": {
+									"name": "loaded_at",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['sys']['id']"
+								},
+								"sink": {
+									"name": "id",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['name']"
+								},
+								"sink": {
+									"name": "location",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": "$['weather']"
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "Json2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sql_database",
 						"type": "DatasetReference"
 					}
 				]
