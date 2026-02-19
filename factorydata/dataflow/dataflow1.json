@@ -1,0 +1,78 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Json2",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sql_database",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "Source__dataset",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          coord as (lon as double, lat as double),",
+				"          weather as (id as integer, main as string, description as string, icon as string)[],",
+				"          base as string,",
+				"          main as (temp as double, feels_like as double, temp_min as double, temp_max as double, pressure as integer, humidity as integer, sea_level as integer, grnd_level as integer),",
+				"          visibility as integer,",
+				"          wind as (speed as double, deg as integer),",
+				"          clouds as (all as integer),",
+				"          dt as integer,",
+				"          sys as (type as integer, id as integer, country as string, sunrise as integer, sunset as integer),",
+				"          timezone as integer,",
+				"          id as integer,",
+				"          name as string,",
+				"          cod as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> source1",
+				"source1 derive(capture_timestamp = toTimestamp(dt, 'yyyy/MM/dd\\'T\\'HH:mm:ss')) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     input(",
+				"          id as integer,",
+				"          location as string,",
+				"          forecast_timestamp as timestamp,",
+				"          temperature as decimal(5,2),",
+				"          humidity as integer,",
+				"          conditions as string,",
+				"          wind_speed as decimal(5,2),",
+				"          loaded_at as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          id",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
