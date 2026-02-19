@@ -92,7 +92,7 @@
 									"path": "$['weather'][0]['main']"
 								},
 								"sink": {
-									"path": "$['weather'][0]['main']"
+									"path": "$['weather']['main']"
 								}
 							},
 							{
@@ -100,7 +100,7 @@
 									"path": "$['weather'][0]['description']"
 								},
 								"sink": {
-									"path": "$['weather'][0]['description']"
+									"path": "$['weather']['description']"
 								}
 							},
 							{
@@ -108,7 +108,7 @@
 									"path": "$['weather'][0]['icon']"
 								},
 								"sink": {
-									"path": "$['weather'][0]['icon']"
+									"path": "$['weather']['icon']"
 								}
 							},
 							{
