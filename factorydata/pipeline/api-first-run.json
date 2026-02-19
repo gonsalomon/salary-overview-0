@@ -84,7 +84,7 @@
 									"path": "$['weather'][0]['id']"
 								},
 								"sink": {
-									"path": "$['weather'][0]['id']"
+									"path": "$['weather']['id']"
 								}
 							},
 							{
