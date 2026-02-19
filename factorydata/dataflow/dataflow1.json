@@ -14,9 +14,9 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "sql_database",
-						"type": "DatasetReference"
+					"linkedService": {
+						"referenceName": "sql_db_0",
+						"type": "LinkedServiceReference"
 					},
 					"name": "sink1",
 					"rejectedDataLinkedService": {
@@ -52,26 +52,16 @@
 				"     documentForm: 'documentPerLine') ~> source1",
 				"source1 derive(capture_timestamp = toTimestamp(dt, 'yyyy/MM/dd\\'T\\'HH:mm:ss')) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
-				"     validateSchema: true,",
-				"     input(",
-				"          id as integer,",
-				"          location as string,",
-				"          forecast_timestamp as timestamp,",
-				"          temperature as decimal(5,2),",
-				"          humidity as integer,",
-				"          conditions as string,",
-				"          wind_speed as decimal(5,2),",
-				"          loaded_at as timestamp",
-				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
+				"     validateSchema: false,",
 				"     format: 'table',",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          id",
-				"     )) ~> sink1"
+				"     store: 'sqlserver',",
+				"     schemaName: '',",
+				"     tableName: '',",
+				"     insertable: true,",
+				"     updateable: false,",
+				"     deletable: false,",
+				"     upsertable: false,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
