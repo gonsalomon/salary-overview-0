@@ -5,7 +5,7 @@
 		"factoryName": {
 			"value": "ETL-engine-0"
 		},
-		"Source__dataset_connectionString": {
+		"blob_storage_1_connectionString": {
 			"value": ""
 		},
 		"sql_db_0_password": {

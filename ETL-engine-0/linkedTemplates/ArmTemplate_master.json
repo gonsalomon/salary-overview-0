@@ -7,9 +7,9 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ETL-engine-0"
 		},
-		"Source__dataset_connectionString": {
+		"blob_storage_1_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Source__dataset'"
+			"metadata": "Secure string for 'connectionString' of 'blob_storage_1'"
 		},
 		"sql_db_0_password": {
 			"type": "secureString",
@@ -62,8 +62,8 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"Source__dataset_connectionString": {
-						"value": "[parameters('Source__dataset_connectionString')]"
+					"blob_storage_1_connectionString": {
+						"value": "[parameters('blob_storage_1_connectionString')]"
 					},
 					"sql_db_0_password": {
 						"value": "[parameters('sql_db_0_password')]"

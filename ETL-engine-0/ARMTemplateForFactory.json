@@ -7,9 +7,9 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ETL-engine-0"
 		},
-		"Source__dataset_connectionString": {
+		"blob_storage_1_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Source__dataset'"
+			"metadata": "Secure string for 'connectionString' of 'blob_storage_1'"
 		},
 		"sql_db_0_password": {
 			"type": "secureString",
@@ -63,6 +63,300 @@
 							"headers": {},
 							"url": "https://api.openweathermap.org/data/2.5/weather?lat=-37.310663&lon=-59.112763&appid=f63e8d24da2afca5c6c6c1f3b73f077c&units=metric&lang=es"
 						}
+					},
+					{
+						"name": "API-response-into-blob-storage",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "get-weather-data",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "HttpReadSettings",
+									"requestMethod": "GET"
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings",
+									"filePattern": "setOfObjects"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['coord']['lon']"
+										},
+										"sink": {
+											"path": "$['coord']['lon']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['coord']['lat']"
+										},
+										"sink": {
+											"path": "$['coord']['lat']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['weather'][0]['id']"
+										},
+										"sink": {
+											"path": "$['weather']['id']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['weather'][0]['main']"
+										},
+										"sink": {
+											"path": "$['weather']['main']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['weather'][0]['description']"
+										},
+										"sink": {
+											"path": "$['weather']['description']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['weather'][0]['icon']"
+										},
+										"sink": {
+											"path": "$['weather']['icon']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['main']['temp']"
+										},
+										"sink": {
+											"path": "$['main']['temp']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['main']['feels_like']"
+										},
+										"sink": {
+											"path": "$['main']['feels_like']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['main']['temp_min']"
+										},
+										"sink": {
+											"path": "$['main']['temp_min']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['main']['temp_max']"
+										},
+										"sink": {
+											"path": "$['main']['temp_max']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['main']['pressure']"
+										},
+										"sink": {
+											"path": "$['main']['pressure']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['main']['humidity']"
+										},
+										"sink": {
+											"path": "$['main']['humidity']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['main']['sea_level']"
+										},
+										"sink": {
+											"path": "$['main']['sea_level']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['main']['grnd_level']"
+										},
+										"sink": {
+											"path": "$['main']['grnd_level']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['visibility']"
+										},
+										"sink": {
+											"path": "$['visibility']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['wind']['speed']"
+										},
+										"sink": {
+											"path": "$['wind']['speed']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['wind']['deg']"
+										},
+										"sink": {
+											"path": "$['wind']['deg']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['clouds']['all']"
+										},
+										"sink": {
+											"path": "$['clouds']['all']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['dt']"
+										},
+										"sink": {
+											"path": "$['dt']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['sys']['type']"
+										},
+										"sink": {
+											"path": "$['sys']['type']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['sys']['id']"
+										},
+										"sink": {
+											"path": "$['sys']['id']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['sys']['country']"
+										},
+										"sink": {
+											"path": "$['sys']['country']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['sys']['sunrise']"
+										},
+										"sink": {
+											"path": "$['sys']['sunrise']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['sys']['sunset']"
+										},
+										"sink": {
+											"path": "$['sys']['sunset']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['timezone']"
+										},
+										"sink": {
+											"path": "$['timezone']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['id']"
+										},
+										"sink": {
+											"path": "$['id']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['name']"
+										},
+										"sink": {
+											"path": "$['name']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['cod']"
+										},
+										"sink": {
+											"path": "$['cod']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['base']"
+										},
+										"sink": {
+											"path": "$['base']"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "API_into_blobstorage",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "stored_API_response",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -70,7 +364,10 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/API_into_blobstorage')]",
+				"[concat(variables('factoryId'), '/datasets/stored_API_response')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/keep_db_alive')]",
@@ -112,6 +409,29 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/keep_alive')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/API_into_blobstorage')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "HttpServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": "data/2.5/weather?lat=-37.310663&lon=-59.112763&appid=f63e8d24da2afca5c6c6c1f3b73f077c&units=metric&lang=es"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/HttpServer1')]"
 			]
 		},
 		{
@@ -197,6 +517,154 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/stored_API_response')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob_storage_1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "sample_data.json",
+						"container": "blob-storage-0"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"coord": {
+							"type": "object",
+							"properties": {
+								"lon": {
+									"type": "number"
+								},
+								"lat": {
+									"type": "number"
+								}
+							}
+						},
+						"weather": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "integer"
+									},
+									"main": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"icon": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"base": {
+							"type": "string"
+						},
+						"main": {
+							"type": "object",
+							"properties": {
+								"temp": {
+									"type": "number"
+								},
+								"feels_like": {
+									"type": "number"
+								},
+								"temp_min": {
+									"type": "number"
+								},
+								"temp_max": {
+									"type": "number"
+								},
+								"pressure": {
+									"type": "integer"
+								},
+								"humidity": {
+									"type": "integer"
+								},
+								"sea_level": {
+									"type": "integer"
+								},
+								"grnd_level": {
+									"type": "integer"
+								}
+							}
+						},
+						"visibility": {
+							"type": "integer"
+						},
+						"wind": {
+							"type": "object",
+							"properties": {
+								"speed": {
+									"type": "number"
+								},
+								"deg": {
+									"type": "integer"
+								}
+							}
+						},
+						"clouds": {
+							"type": "object",
+							"properties": {
+								"all": {
+									"type": "integer"
+								}
+							}
+						},
+						"dt": {
+							"type": "integer"
+						},
+						"sys": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "integer"
+								},
+								"id": {
+									"type": "integer"
+								},
+								"country": {
+									"type": "string"
+								},
+								"sunrise": {
+									"type": "integer"
+								},
+								"sunset": {
+									"type": "integer"
+								}
+							}
+						},
+						"timezone": {
+							"type": "integer"
+						},
+						"id": {
+							"type": "integer"
+						},
+						"name": {
+							"type": "string"
+						},
+						"cod": {
+							"type": "integer"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/blob_storage_1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/HttpServer1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -227,14 +695,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Source__dataset')]",
+			"name": "[concat(parameters('factoryName'), '/blob_storage_1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"connectionString": "[parameters('Source__dataset_connectionString')]"
+					"connectionString": "[parameters('blob_storage_1_connectionString')]"
 				}
 			},
 			"dependsOn": []
