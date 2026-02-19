@@ -53,7 +53,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "weather_forecast"
+			"table": "weather_data"
 		}
 	}
 }
